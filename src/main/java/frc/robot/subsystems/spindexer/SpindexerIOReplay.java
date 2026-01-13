@@ -1,5 +1,3 @@
 package frc.robot.subsystems.spindexer;
 
-public class SpindexerIOReplay {
-    
-}
+public class SpindexerIOReplay {}

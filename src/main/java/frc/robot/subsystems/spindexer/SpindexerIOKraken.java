@@ -1,5 +1,3 @@
 package frc.robot.subsystems.spindexer;
 
-public class SpindexerIOKraken {
-    
-}
+public class SpindexerIOKraken {}

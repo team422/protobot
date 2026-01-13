@@ -200,8 +200,8 @@ public final class Constants {
   public static final class SpindexerConstants {
     // sim
     public static final DCMotor kSimGearbox = DCMotor.getKrakenX60(1);
-    public static final double kSimMOI = .005;   
-    public static final double kSimGearRatio =  (30.0/12.0);
+    public static final double kSimMOI = .005;
+    public static final double kSimGearRatio = (30.0 / 12.0);
     public static final double kSimGearing = kSimGearRatio;
   }
 
