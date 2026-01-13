@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Constants.Ports;
 import frc.robot.RobotState.RobotAction;
 import frc.robot.commands.drive.DriveCommands;
 import frc.robot.oi.DriverControls;
@@ -23,7 +24,7 @@ public class RobotContainer {
   private Intake m_intake;
 
   // Controller
-  private DriverControls m_driverControls;
+  private DriverControls m_controller;
 
   // Dashboard inputs
   private LoggedDashboardChooser<Command> m_autoChooser;
@@ -44,7 +45,7 @@ public class RobotContainer {
               new ModuleIOTalonFX(1),
               new ModuleIOTalonFX(2),
               new ModuleIOTalonFX(3));
-      m_intake = new Intake(new IntakeIOKraken(0));
+      m_intake = new Intake(new IntakeIOKraken(Ports.kIntake));
     } else {
       m_drive =
           new Drive(
@@ -62,30 +63,34 @@ public class RobotContainer {
   }
 
   public void configureControllers() {
-    m_driverControls = new DriverControlsPS5(0);
+    m_controller = new DriverControlsPS5(0);
   }
 
   public void configureBindings() {
     m_drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             m_drive,
-            m_driverControls::getForward,
-            m_driverControls::getStrafe,
-            m_driverControls::getTurn,
+            m_controller::getForward,
+            m_controller::getStrafe,
+            m_controller::getTurn,
             false));
-    m_driverControls
+    m_controller
         .resetFieldCentric()
         .onTrue(
             Commands.runOnce(
                 () -> {
                   m_drive.setPose(new Pose2d());
                 }));
-    m_driverControls
+    m_controller
         .intake()
         .onTrue(
             Commands.runOnce(
                 (() -> {
+                  if(RobotState.getInstance().getCurrAction() != RobotAction.kIntaking) {
                   RobotState.getInstance().updateRobotAction(RobotAction.kIntaking);
+                  } else {
+                    RobotState.getInstance().updateRobotAction(RobotAction.kTeleopDefault);
+                  }
                 })));
   }
 

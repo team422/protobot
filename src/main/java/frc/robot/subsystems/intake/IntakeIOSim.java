@@ -2,7 +2,7 @@ package frc.robot.subsystems.intake;
 
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
-import frc.robot.Constants.IndexerConstants;
+import frc.robot.Constants.IntakeConstants;
 
 public class IntakeIOSim implements IntakeIO {
   private DCMotorSim m_sim;
@@ -12,9 +12,9 @@ public class IntakeIOSim implements IntakeIO {
   public IntakeIOSim() {
     var plant =
         LinearSystemId.createDCMotorSystem(
-            IndexerConstants.kSimGearbox, IndexerConstants.kSimMOI, IndexerConstants.kSimGearing);
+            IntakeConstants.kSimGearbox, IntakeConstants.kSimMOI, IntakeConstants.kGearRatio);
 
-    m_sim = new DCMotorSim(plant, IndexerConstants.kSimGearbox);
+    m_sim = new DCMotorSim(plant, IntakeConstants.kSimGearbox);
   }
 
   @Override
@@ -22,23 +22,18 @@ public class IntakeIOSim implements IntakeIO {
     m_sim.setInputVoltage(m_voltage);
     m_sim.update(0.02);
 
-    inputs.Position = m_sim.getAngularPositionRotations();
-    inputs.VelocityRPS = m_sim.getAngularVelocityRPM() / 60;
-    inputs.Current = m_sim.getCurrentDrawAmps();
-    inputs.Voltage = m_voltage;
-
-    // Don't matter for sim
-    inputs.StatorCurrent = 0.0;
-    inputs.MotorIsConnected = true;
+    inputs.position = m_sim.getAngularPositionRotations();
+    inputs.velocityRPS = m_sim.getAngularVelocityRPM() / 60;
+    inputs.supplyCurrent = m_sim.getCurrentDrawAmps();
+    inputs.voltage = m_voltage;
+    inputs.connected = true;
   }
 
   @Override
-  public void setVoltage(double Voltage) {
-    m_voltage = Voltage;
+  public void setVoltage(double volts) {
+    m_voltage = volts;
   }
 
   @Override
-  public void setCurrentLimits(double supplyLimit) {
-    // Not needed for sim
-  }
+  public void setCurrentLimits(double supplyLimit) {}
 }

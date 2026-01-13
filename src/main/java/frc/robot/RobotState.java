@@ -50,7 +50,8 @@ public class RobotState {
         newDriveState = DriveProfiles.kDefault;
         break;
       case kIntaking:
-        newIntakeState = IntakeState.kIdle;
+        newIntakeState = IntakeState.kIntaking;
+        break;
       default:
         break;
     }

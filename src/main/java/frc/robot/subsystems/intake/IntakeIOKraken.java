@@ -15,7 +15,7 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import frc.robot.Constants.CurrentLimitConstants;
-import frc.robot.Constants.IndexerConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.Ports;
 
 public class IntakeIOKraken implements IntakeIO {
@@ -38,12 +38,12 @@ public class IntakeIOKraken implements IntakeIO {
     var currentLimits =
         new CurrentLimitsConfigs()
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(CurrentLimitConstants.kIndexerDefaultSupplyLimit)
+            .withSupplyCurrentLimit(CurrentLimitConstants.kIntakeDefaultSupplyLimit)
             .withStatorCurrentLimitEnable(true)
-            .withStatorCurrentLimit(CurrentLimitConstants.kIndexerDefaultStatorLimit);
+            .withStatorCurrentLimit(CurrentLimitConstants.kIntakeDefaultStatorLimit);
 
     var feedbackConfig =
-        new FeedbackConfigs().withSensorToMechanismRatio(IndexerConstants.kGearRatio);
+        new FeedbackConfigs().withSensorToMechanismRatio(IntakeConstants.kGearRatio);
 
     var motorOutput = new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake);
 
@@ -77,17 +77,17 @@ public class IntakeIOKraken implements IntakeIO {
     BaseStatusSignal.refreshAll(
         m_connected, m_voltageSignal, m_velocity, m_supplyCurrent, m_statorCurrent, m_temperature);
 
-    inputs.Connected = m_connected.getValue() != ConnectedMotorValue.Unknown;
-    inputs.Voltage = m_voltageSignal.getValueAsDouble();
-    inputs.Velocity = m_velocity.getValueAsDouble();
-    inputs.SupplyCurrent = m_supplyCurrent.getValueAsDouble();
-    inputs.StatorCurrent = m_statorCurrent.getValueAsDouble();
-    inputs.Temperature = m_temperature.getValueAsDouble();
+    inputs.connected = m_connected.getValue() != ConnectedMotorValue.Unknown;
+    inputs.voltage = m_voltageSignal.getValueAsDouble();
+    inputs.velocityRPS = m_velocity.getValueAsDouble();
+    inputs.supplyCurrent = m_supplyCurrent.getValueAsDouble();
+    inputs.statorCurrent = m_statorCurrent.getValueAsDouble();
+    inputs.temperature = m_temperature.getValueAsDouble();
   }
 
   @Override
-  public void setVoltage(double Voltage) {
-    m_motor.setControl(m_voltage.withOutput(Voltage));
+  public void setVoltage(double volts) {
+    m_motor.setControl(m_voltage.withOutput(volts));
   }
 
   @Override

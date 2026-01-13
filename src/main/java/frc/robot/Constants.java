@@ -18,12 +18,9 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Mass;
 import edu.wpi.first.units.measure.MomentOfInertia;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import edu.wpi.first.wpilibj.util.Color;
 import frc.lib.littletonUtils.GeomUtil;
 import frc.lib.littletonUtils.LoggedTunableNumber;
 import frc.lib.littletonUtils.SwerveSetpointGenerator.ModuleLimits;
@@ -187,157 +184,17 @@ public final class Constants {
     public static final MomentOfInertia kRobotMOI = KilogramSquareMeters.of(6.5);
   }
 
-  public static final class ClimbConstants {
+  public static final class IntakeConstants {
+    public static final LoggedTunableNumber kIntakingVoltage =
+        new LoggedTunableNumber("Intake/intakingVoltage", 8.0);
+    public static final LoggedTunableNumber kIdleVoltage =
+        new LoggedTunableNumber("Intake/idleVoltage", 0.0);
 
-    public static final LoggedTunableNumber kClimbP = new LoggedTunableNumber("Climb P", 30.0);
-    public static final LoggedTunableNumber kClimbI = new LoggedTunableNumber("Climb I", 0.0);
-    public static final LoggedTunableNumber kClimbD = new LoggedTunableNumber("Climb D", 0.0);
-    public static final double kClimbTolerance = 5.0; // degrees
+    public static final double kGearRatio = 24.0 / 56.0;
 
-    public static final LoggedTunableNumber kStowFeedforward =
-        new LoggedTunableNumber("Climb Stow Feedforward", 0.0);
-
-    // these are magic units
-    public static final LoggedTunableNumber kClimbStowPos =
-        new LoggedTunableNumber("Climb Stow Angle", -225.0);
-    public static final LoggedTunableNumber kClimbMatchPos =
-        new LoggedTunableNumber("Climb Match Angle", 300.0);
-    public static final LoggedTunableNumber kClimbDeployPos =
-        new LoggedTunableNumber("Climb Deploy Angle", 600.0);
-
-    public static final double kClimbReduction = (5.0 / 1.0) * (4.0 / 1.0) * (68.0 / 18.0);
-
-    public static final Rotation2d kMinAngle = Rotation2d.fromDegrees(-350.0);
-    public static final Rotation2d kMaxAngle = Rotation2d.fromDegrees(600.0);
-
-    // sim constants
-    public static final double kSimGearing = 1.0;
+    // sim
     public static final DCMotor kSimGearbox = DCMotor.getKrakenX60(1);
-    public static final double kSimClimbArmLengthMeters = 0.25;
-    public static final double kSimMOI = 2.0;
-    public static final double kSimStartingAngleRad = Units.degreesToRadians(0);
-    public static final boolean kSimGravity = false;
-    public static final double kSimClimbP = 0.5;
-    public static final double kSimClimbI = 0.0;
-    public static final double kSimClimbD = 0.35;
-  }
-
-  public static final class LedConstants {
-    public static final int kStripLength = 22;
-
-    public static final Color kOff = Color.kBlack;
-    public static final Color kL1 = Color.kBlue;
-    public static final Color kL2 = Color.kRed;
-    public static final Color kL3 = Color.kYellow;
-    public static final Color kL4 = Color.kGreen;
-    public static final Color kDisabled = Color.kMagenta;
-    public static final Color kLocationCheckYaw = Color.kDarkGreen;
-    public static final Color kLocationCheckDistance = Color.kLightBlue;
-    public static final Color kAlert = Color.kRed;
-    public static final Color kFullTuning = Color.kWhite;
-    public static final Color kVisionOff = Color.kBlack;
-    public static final Color kAutoscoreMeasurementsBad = Color.kOrange;
-    public static final Color kAutoscoreMeasurementsGood = Color.kDarkOliveGreen;
-    public static final Color kHasGamePiece = Color.kBrown;
-  }
-
-  public static final class ElevatorConstants {
-    public static final LoggedTunableNumber kP0 = new LoggedTunableNumber("Elevator P0", 2.0);
-    public static final LoggedTunableNumber kI = new LoggedTunableNumber("Elevator I", 0.0);
-    public static final LoggedTunableNumber kD = new LoggedTunableNumber("Elevator D", 0.08);
-    public static final LoggedTunableNumber kKG0 = new LoggedTunableNumber("Elevator kG0", 0.18);
-
-    public static final LoggedTunableNumber kP1 = new LoggedTunableNumber("Elevator P1", 2.0);
-    public static final LoggedTunableNumber kKG1 = new LoggedTunableNumber("Elevator kG1", 0.28);
-
-    public static final LoggedTunableNumber kP2 = new LoggedTunableNumber("Elevator P2", 2.0);
-    public static final LoggedTunableNumber kKG2 = new LoggedTunableNumber("Elevator kG2", 0.40);
-
-    public static final LoggedTunableNumber kMagicMotionCruiseVelocity =
-        new LoggedTunableNumber("Elevator MagicMotion cruise velocity", 5.0);
-    public static final LoggedTunableNumber kMagicMotionAcceleration =
-        new LoggedTunableNumber("Elevator MagicMotion acceleration", 10.0);
-    public static final LoggedTunableNumber kMagicMotionJerk =
-        new LoggedTunableNumber("Elevator MagicMotion Jerk", 100.0);
-
-    public static final LoggedTunableNumber kStowHeight =
-        new LoggedTunableNumber("Elevator Stow Height", 0.0);
-    public static final LoggedTunableNumber kIntakingHeight =
-        new LoggedTunableNumber("Elevator Intake Height", 0.0);
-    public static final LoggedTunableNumber kAlgaeDescoringIntialHeightL2 =
-        new LoggedTunableNumber("Elevator Algae Descore Initial Height L2", 19.0);
-    public static final LoggedTunableNumber kAlgaeDescoringFinalHeightL2 =
-        new LoggedTunableNumber("Elevator Algae Descore Final Height L2", 23.5);
-    public static final LoggedTunableNumber kAlgaeDescoringIntialHeightL3 =
-        new LoggedTunableNumber("Elevator Algae Descore Initial Height L3", 29.5);
-    public static final LoggedTunableNumber kAlgaeDescoringFinalHeightL3 =
-        new LoggedTunableNumber("Elevator Algae Descore Final Height L3", 38.5);
-    public static final LoggedTunableNumber kBargeScoreHeight =
-        new LoggedTunableNumber("Elevator Barge Score Height", 72.5);
-    public static final LoggedTunableNumber kAlgaeHoldHeight =
-        new LoggedTunableNumber("Elevator Algae Hold Height", 14.5);
-    public static final LoggedTunableNumber kAlgaeOuttakeHeight =
-        new LoggedTunableNumber("Elevator Algae Outtake Height", 3.5);
-    public static final LoggedTunableNumber kLollipopIntakeHeight =
-        new LoggedTunableNumber("Elevator Lollipop Intake Height", 3.0);
-    public static final LoggedTunableNumber kDriveUpHeight =
-        new LoggedTunableNumber("Drive Up Height", 11.5);
-
-    public static final LoggedTunableNumber kBargeThrowHeight =
-        new LoggedTunableNumber("Elevator Barge Throw Height", 17.0);
-
-    public static final double kDiameter = 2.256; // inches
-    public static final double kGearRatio = 54.0 / 12.0;
-    // public static final double kSensorToMechanismRatio = kDiameter * Math.PI / kGearRatio;
-    public static final double kSensorToMechanismRatio = (kGearRatio / (kDiameter * Math.PI));
-    // public static final double kSensorToMechanismRatio = 1.0;
-    public static final LoggedTunableNumber kElevatorOffset =
-        new LoggedTunableNumber("Elevator Offset", Units.inchesToMeters(0));
-
-    // this is the more than the max amount that the belts will ever skip
-    public static final double kMaxSkip = 2.0;
-    public static final LoggedTunableNumber kSlamTime = new LoggedTunableNumber("Slam Time", 0.2);
-    public static final LoggedTunableNumber kSlamVoltage =
-        new LoggedTunableNumber("Slam Voltage", -3.0);
-
-    public static final double kZeroVelocityThreshold = 0.03;
-    public static final double kZeroCurrentTheshold = 10.0;
-
-    public static final LoggedTunableNumber kL1 =
-        new LoggedTunableNumber("Elevator L1 Height", 9.5);
-    public static final LoggedTunableNumber kL2 =
-        new LoggedTunableNumber("Elevator L2 Height", 27.0);
-    public static final LoggedTunableNumber kL3 =
-        new LoggedTunableNumber("Elevator L3 Height", 43.25);
-    public static final LoggedTunableNumber kL4 =
-        new LoggedTunableNumber("Elevator L4 Height", 71.0);
-
-    // Simulation constants
-    public static final double kSimGearing = kGearRatio;
-    public static final double kSimMOI = .001;
-    public static final DCMotor kSimGearbox = DCMotor.getKrakenX60(2);
-    public static final double kMinHeight = 0;
-    public static final double kMaxHeight = 73.5;
-    public static final double kHeightTolerance = 0.25;
-    public static final double kSimElevatorP = 0.5;
-    public static final double kSimElevatorI = 0.0;
-    public static final double kSimElevatorD = 0.0;
-    public static final double kSimElevatorkG = 0.0;
-  }
-
-  public static final class FullTuningConstants {
-    public static final boolean kFullTuningMode = false;
-
-    public static final LoggedTunableNumber kElevatorSetpoint =
-        new LoggedTunableNumber("Full Tuning Elevator Setpoint", 0.0);
-    public static final LoggedTunableNumber kIntakePivotSetpoint =
-        new LoggedTunableNumber("Full Tuning Intake Pivot Setpoint", 0.0);
-    public static final LoggedTunableNumber kManipulatorWristSetpoint =
-        new LoggedTunableNumber("Full Tuning Manipulator Wrist Setpoint", 0.0);
-    public static final LoggedTunableNumber kManipulatorRollerVoltage =
-        new LoggedTunableNumber("Full Tuning Manipulator Roller Voltage", 0.0);
-    public static final LoggedTunableNumber kIndexerVoltage =
-        new LoggedTunableNumber("Full Tuning Indexer Voltage", 0.0);
+    public static final double kSimMOI = .005;
   }
 
   public static final class AprilTagVisionConstants {
@@ -417,220 +274,6 @@ public final class Constants {
     public static final double kRotationSpeedThreshold = 0.2; // m/s
   }
 
-  public static final class IntakeConstants {
-    public static final double kPivotGearRatio = (72.0 / 8.0) * (36.0 / 14.0);
-    public static final double kPivotAbsoluteEncoderGearRatio = 3.2;
-    public static final double kRollerGearRatio = (30.0 / 12.0);
-    public static final double kRollerRadius = Units.inchesToMeters(1.5);
-
-    public static final LoggedTunableNumber kPivotTolerance =
-        new LoggedTunableNumber("Pivot Tolerance", 65.0); // degrees
-
-    // the offset needs to be so that it starts at 90 degrees (top)
-    // public static final Rotation2d kPivotOffset =
-    //     Rotation2d.fromDegrees(87.451171875).plus(Rotation2d.fromDegrees(90.0));
-    // public static final Rotation2d kPivotOffset = Rotation2d.fromDegrees(0.0);
-    public static final Rotation2d kPivotOffset =
-        Rotation2d.fromDegrees(
-            (24.0 + 134.0 + 8.0 + 16.1 + 3.0 + 9.0 - 6.0 - 2.0) * kPivotAbsoluteEncoderGearRatio);
-
-    public static final Rotation2d kPivotFakeToRealOffset = Rotation2d.fromDegrees(75.0);
-
-    public static final LoggedTunableNumber kZeroEncoderThreshold =
-        new LoggedTunableNumber("Pivot Zero Threshikd", 122.0); // degrees
-
-    public static final Angle kZeroEncoderValue = Degrees.of(137.0);
-
-    // current to be considered holding a game piece
-    // unused rn
-    public static final double kRollerCoralCurrentThreshold = 99.0;
-
-    public static final double kRollerCoralCurrentDebounce = 0.2; // seconds
-    // L1 SETUP
-    public static final LoggedTunableNumber kPivotP0 = new LoggedTunableNumber("Pivot P0", 16.0);
-    // PASSTHROUGH SETUP
-    // public static final LoggedTunableNumber kPivotP0 = new LoggedTunableNumber("Pivot P0", 20.0);
-    public static final LoggedTunableNumber kPivotI = new LoggedTunableNumber("Pivot I", 0.0);
-    public static final LoggedTunableNumber kPivotD0 = new LoggedTunableNumber("Pivot D0", 0.2);
-    public static final LoggedTunableNumber kPivotP1 = new LoggedTunableNumber("Pivot P1", 30.0);
-    public static final LoggedTunableNumber kPivotD1 = new LoggedTunableNumber("Pivot D1", 0.2);
-    public static final LoggedTunableNumber kPivotP2 = new LoggedTunableNumber("Pivot P2", 30.0);
-    public static final LoggedTunableNumber kPivotD2 = new LoggedTunableNumber("Pivot D2", 0.2);
-    public static final LoggedTunableNumber kPivotKS = new LoggedTunableNumber("Pivot kS", 0.23);
-
-    public static final LoggedTunableNumber kPivotStowAngle =
-        new LoggedTunableNumber("Pivot Stow Angle", 30.0);
-    public static final LoggedTunableNumber kPivotIntakeAngle =
-        new LoggedTunableNumber("Pivot Intake Angle", 139.0);
-    public static final LoggedTunableNumber kPivotHoldAngle =
-        new LoggedTunableNumber("Pivot Hold Angle", 30.0);
-    public static final LoggedTunableNumber kPivotOuttakeAngle =
-        new LoggedTunableNumber("Pivot Outtake Angle", 48.0);
-    public static final LoggedTunableNumber kPivotFunnelIntakeAngle =
-        new LoggedTunableNumber("Pivot Funnel Intake Angle", 64.0);
-    public static final LoggedTunableNumber kPivotCoralRunThroughAngle =
-        new LoggedTunableNumber("Pivot Coral Run Through Angle", 30.0);
-    public static final LoggedTunableNumber kPivotClimbAngle =
-        new LoggedTunableNumber("Pivot Climb Angle", 50.0);
-    public static final LoggedTunableNumber kIntakingFeedforward =
-        new LoggedTunableNumber("Pivot Intaking Feedforward", 0.0);
-
-    public static final LoggedTunableNumber kZeroVelocityThreshold =
-        new LoggedTunableNumber("Pivot Zero Velocity Threshold", 1.0);
-    public static final LoggedTunableNumber kIntakingFeedforwardThreshold =
-        new LoggedTunableNumber("Pivot Intaking Feedforward Threshold", 125.0);
-
-    public static final LoggedTunableNumber kRollerStowVoltage =
-        new LoggedTunableNumber("Intake Roller Stow Voltage", 0.0);
-    public static final LoggedTunableNumber kRollerIntakeVoltage =
-        new LoggedTunableNumber("Intake Roller Intake Voltage", 3.5);
-    public static final LoggedTunableNumber kRollerL1IntakeVoltage =
-        new LoggedTunableNumber("Intake Roller L1 Intake Voltage", 3.0);
-    public static final LoggedTunableNumber kRollerHoldVoltage =
-        new LoggedTunableNumber("Intake Roller Hold Voltage", 0.29);
-    public static final LoggedTunableNumber kRollerOuttakeVoltage =
-        new LoggedTunableNumber("Intake Roller Outtake Voltage", -2.0);
-    public static final LoggedTunableNumber kRollerFunnelIntakeVoltage =
-        new LoggedTunableNumber("Intake Roller Funnel Intake Voltage", -2.0);
-    public static final LoggedTunableNumber kRollerCoralRunThroughVoltage =
-        new LoggedTunableNumber("Intake Roller Coral Run Through Voltage", 4.0);
-    public static final LoggedTunableNumber kRollerEjectVoltage =
-        new LoggedTunableNumber("Intake Roller Coral Eject Voltage", -3.0);
-
-    public static final LoggedTunableNumber kCoralRunThroughTimeout =
-        new LoggedTunableNumber("Coral Runthrough Timeout", 0.5);
-    public static final LoggedTunableNumber kCoralRaiseTimeout =
-        new LoggedTunableNumber("Coral Raise Timeout", 0.1);
-
-    // Simulation constants
-    public static final DCMotor kPivotSimGearbox = DCMotor.getKrakenX60Foc(1);
-    public static final double kPivotSimGearing = kPivotGearRatio;
-    public static final double kPivotArmMass = Units.lbsToKilograms(3.419);
-    public static final double kPivotArmLength = Units.inchesToMeters(17.5);
-    public static final double kPivotSimMOI =
-        SingleJointedArmSim.estimateMOI(kPivotArmLength, kPivotArmMass);
-    public static final Rotation2d kPivotMinAngle = Rotation2d.fromDegrees(30.0);
-    public static final Rotation2d kPivotMaxAngle = Rotation2d.fromDegrees(140.0);
-    public static final boolean kSimSimulateGravity = false;
-    public static final Rotation2d kSimStartingAngle =
-        Rotation2d.fromDegrees(Math.random() * kPivotMaxAngle.getDegrees());
-
-    public static final DCMotor kRollerSimGearbox = DCMotor.getKrakenX60Foc(1);
-    public static final double kRollerSimGearing = kRollerGearRatio;
-    public static final double kRollerSimMOI = 0.004;
-
-    public static final double kPivotSimP = .15;
-    public static final double kPivotSimI = 0.0;
-    public static final double kPivotSimD = 0.0;
-  }
-
-  public static final class ManipulatorConstants {
-    public static final double kWristGearRatio = (66.0 / 10.0) * (32.0 / 14.0);
-    // public static final double kWristGearRatio = 1.0;
-    public static final double kWristAbsoluteEncoderGearRatio = 32.0 / 14.0;
-    public static final double kRollerGearRatio = (58.0 / 16.0);
-    public static final double kRollerRadius = Units.inchesToMeters(3);
-
-    public static final double kWristTolerance = 2.0; // degrees
-
-    // the offset needs to be so that it starts at 180 degrees (all the way out)
-    // public static final Rotation2d kWristOffset =
-    //     Rotation2d.fromDegrees(-78.662).plus(Rotation2d.fromDegrees(180.0));
-    public static final Rotation2d kWristOffset =
-        Rotation2d.fromDegrees((-37.4) * kWristAbsoluteEncoderGearRatio);
-    // get owned shrihari - sri b is a better coder
-    // public static final Rotation2d kWristOffset = Rotation2d.fromDegrees(0.0);
-
-    public static final double kRollerPositionTolerance = 10.0; // degrees
-    public static final LoggedTunableNumber kRollerFeedErrorTolerance =
-        new LoggedTunableNumber("Manipulator Roller Feed Error Tolerance", 75.0);
-
-    // how many degrees to move after photoelectric is tripped
-    public static final LoggedTunableNumber kRollerIndexingPosition =
-        new LoggedTunableNumber("Manipulator Roller Indexing Position", 150.0);
-
-    public static final LoggedTunableNumber kWristP = new LoggedTunableNumber("Wrist P", 55.0);
-    public static final LoggedTunableNumber kWristI = new LoggedTunableNumber("Wrist I", 0.0);
-    public static final LoggedTunableNumber kWristD = new LoggedTunableNumber("Wrist D", 0.3);
-    public static final LoggedTunableNumber kWristKS = new LoggedTunableNumber("Wrist kS", 0.25);
-
-    public static final LoggedTunableNumber kWristStowAngle =
-        new LoggedTunableNumber("Wrist Stow Angle", 100.0);
-    public static final LoggedTunableNumber kWristIntakeAngle =
-        new LoggedTunableNumber("Wrist Intake Angle", 100.0);
-    public static final LoggedTunableNumber kWristScoringOffset =
-        new LoggedTunableNumber("Wrist Scoring Offset", 0.0);
-    public static final LoggedTunableNumber kWristAlgaeDescoringAngle =
-        new LoggedTunableNumber("Wrist Algae Descoring Angle", 30.0);
-    public static final LoggedTunableNumber kWristAlgaeHoldAngle =
-        new LoggedTunableNumber("Wrist Algae Hold Angle", 35.0);
-    public static final LoggedTunableNumber kWristAlgaeOuttakeAngle =
-        new LoggedTunableNumber("Wrist Algae Outtake Angle", 0.0);
-
-    public static final LoggedTunableNumber kRollerStowVoltage =
-        new LoggedTunableNumber("Manipulator Roller Stow Voltage", 0.0);
-    public static final LoggedTunableNumber kRollerIntakeVoltage =
-        new LoggedTunableNumber("Manipulator Roller Intake Voltage", 2.0);
-    public static final LoggedTunableNumber kRollerIndexingVoltage =
-        new LoggedTunableNumber("Manipulator Roller Indexing Voltage", 1.0);
-    public static final LoggedTunableNumber kRollerEjectVoltage =
-        new LoggedTunableNumber("Manipulator Roller Eject Voltage", -3.0);
-    public static final LoggedTunableNumber kRollerL1ScoringVoltageAutoscore =
-        new LoggedTunableNumber("Manipulator Roller L1 Scoring Voltage Autoscore", 3.5);
-    public static final LoggedTunableNumber kRollerL1ScoringVoltageManual =
-        new LoggedTunableNumber("Manipulator Roller L1 Scoring Voltage Manual", 2.25);
-    public static final LoggedTunableNumber kRollerL2L3ScoringVoltage =
-        new LoggedTunableNumber("Manipulator Roller L2 L3 Scoring Voltage", 3.0);
-    public static final LoggedTunableNumber kRollerL4ScoringVoltage =
-        new LoggedTunableNumber("Manipulator Roller L4 Scoring Voltage", 3.0);
-    public static final LoggedTunableNumber kRollerAlgaeDescoringVoltage =
-        new LoggedTunableNumber("Manipulator Roller Algae Descoring Voltage", 3.0);
-    public static final LoggedTunableNumber kRollerAlgaeHoldVoltage =
-        new LoggedTunableNumber("Manipulator Roller Algae Hold Voltage", 1.0);
-    public static final LoggedTunableNumber kRollerAlgaeOuttakeVoltage =
-        new LoggedTunableNumber("Manipulator Roller Algae Outtake Voltage", -4.0);
-    public static final LoggedTunableNumber kRollerBargeVoltage =
-        new LoggedTunableNumber("Manipulator Roller Barge Voltage", -12.0);
-
-    public static final LoggedTunableNumber kRollerP =
-        new LoggedTunableNumber("Manipulator Roller P", 20.0);
-    public static final LoggedTunableNumber kRollerI =
-        new LoggedTunableNumber("Manipulator Roller I", 0.0);
-    public static final LoggedTunableNumber kRollerD =
-        new LoggedTunableNumber("Manipulator Roller D", 0.0);
-    public static final LoggedTunableNumber kRollerKS =
-        new LoggedTunableNumber("Manipulator Roller kS", 0.22);
-
-    public static final LoggedTunableNumber kCoralOuttakeTimeout =
-        new LoggedTunableNumber("Coral Outtake Timeout", 0.15);
-
-    public static final LoggedTunableNumber kL1 = new LoggedTunableNumber("Wrist L1 Angle", 112.0);
-    public static final LoggedTunableNumber kL2 = new LoggedTunableNumber("Wrist L2 Angle", 55.0);
-    public static final LoggedTunableNumber kL3 = new LoggedTunableNumber("Wrist L3 Angle", 55.0);
-    public static final LoggedTunableNumber kL4 = new LoggedTunableNumber("Wrist L4 Angle", 40.0);
-    // Simulation constants
-    public static final DCMotor kWristSimGearbox = DCMotor.getKrakenX60Foc(1);
-    public static final double kWristSimGearing = kWristGearRatio;
-    public static final double kWristArmMass = Units.lbsToKilograms(3.373);
-    public static final double kWristArmLength = Units.inchesToMeters(7.75);
-    public static final double kWristSimMOI =
-        SingleJointedArmSim.estimateMOI(kWristArmLength, kWristArmMass);
-    public static final Rotation2d kWristMinAngle = Rotation2d.fromDegrees(0.0);
-    public static final Rotation2d kWristMaxAngle = Rotation2d.fromDegrees(130.0);
-    public static final boolean kSimSimulateGravity = false;
-    public static final Rotation2d kSimStartingAngle = Rotation2d.fromDegrees(Math.random() * 130);
-    public static final double kSimRollerP = 0.01;
-    public static final double kSimRollerI = 0.0;
-    public static final double kSimRollerD = 0.0;
-    public static final double kSimWristP = 0.150000;
-    public static final double kSimWristI = 0.0;
-    public static final double kSimWristD = 0.0;
-
-    public static final DCMotor kRollerSimGearbox = DCMotor.getKrakenX60Foc(1);
-    public static final double kRollerSimGearing = kRollerGearRatio;
-    public static final double kRollerSimMOI = 0.004;
-  }
-
   public static final class CurrentLimitConstants {
     // Drive
     public static final double kDriveDefaultSupplyCurrentLimit = 75.0;
@@ -640,52 +283,8 @@ public final class Constants {
     public static final double kTurnDefaultStatorCurrentLimit = 120.0;
 
     // Intake
-    public static final double kIntakePivotDefaultSupplyLimit = 80.0;
-    public static final double kIntakePivotDefaultStatorLimit = 120.0;
-
-    public static final double kIntakeRollerDefaultSupplyLimit = 80.0;
-    public static final double kIntakeRollerDefaultStatorLimit = 120.0;
-
-    // Indexer
-    public static final double kIndexerDefaultSupplyLimit = 30.0;
-    public static final double kIndexerDefaultStatorLimit = 120.0;
-
-    // Manipulator
-    public static final double kManipulatorWristDefaultSupplyLimit = 80.0;
-    public static final double kManipulatorWristDefaultStatorLimit = 120.0;
-
-    public static final double kManipulatorRollerDefaultSupplyLimit = 80.0;
-    public static final double kManipulatorRollerDefaultStatorLimit = 120.0;
-
-    // Elevator
-    public static final double kElevatorDefaultSupplyLimit = 65.0;
-    public static final double kElevatorDefaultStatorLimit = 95.0;
-
-    // Climb
-    public static final double kClimbDefaultSupplyLimit = 80.0;
-    public static final double kClimbDefaultStatorLimit = 120.0;
-  }
-
-  public static final class IndexerConstants {
-
-    public static final double kGearRatio = 30.0 / 8.0;
-    public static final double kRollerRadius = Units.inchesToMeters(2);
-
-    public static final LoggedTunableNumber kIndexerIdleVoltage =
-        new LoggedTunableNumber("Indexer Idle Voltage", 0.0);
-    public static final LoggedTunableNumber kIndexerIndexingVoltage =
-        new LoggedTunableNumber("Indexer Indexing Voltage", 3.71);
-    public static final LoggedTunableNumber kIndexerTopIndexingVoltage =
-        new LoggedTunableNumber("Indexer Top Indexing Voltage", 2.5);
-    public static final LoggedTunableNumber kIndexerEjectVoltage =
-        new LoggedTunableNumber("Indexer Eject Voltage", -5.0);
-    public static final LoggedTunableNumber kIndexerTopEjectVoltage =
-        new LoggedTunableNumber("Indexer Top Eject Voltage", -2.5);
-
-    // Simulation constants
-    public static final DCMotor kSimGearbox = DCMotor.getKrakenX60Foc(2);
-    public static final double kSimGearing = kGearRatio;
-    public static final double kSimMOI = 0.005;
+    public static final double kIntakeDefaultSupplyLimit = 30.0;
+    public static final double kIntakeDefaultStatorLimit = 120.0;
   }
 
   public static final class Ports {
@@ -709,39 +308,9 @@ public final class Constants {
 
     public static final String kDriveCanivoreName = "Drivetrain";
 
-    public static final int kClimbMotor = 36;
-
-    public static final int kIntakeRoller = 45;
-    public static final int kIntakePivot = 46;
-    public static final int kIntakeAbsoluteEncoder = 9;
-
-    public static final int kManipulatorRoller = 29;
-    public static final int kManipulatorWrist = 30;
-    public static final int kManipulatorAbsoluteEncoder = 8;
-    public static final int kManipulatorPhotoElectricOne = 6;
-    public static final int kManipulatorPhotoElectricTwo = 7;
-    public static final int kFunnelPhotoElectricOne = 4;
-    public static final int kFunnelPhotoElectricTwo = 5;
-
-    public static final int kIndexerSideMotor = 25;
-    public static final int kIndexerTopMotor = 26;
-
-    public static final int kLed = 9;
-
-    public static final int kElevatorLead = 23;
-    public static final int kElevatorFollowing = 24;
+    public static final int kIntake = 12;
 
     public static final String kMainCanivoreName = "Main";
-  }
-
-  /** Whether or not subsystems are enabled on the proto board */
-  public static final class ProtoConstants {
-    public static final boolean kRealDrive = true;
-    public static final boolean kRealIntake = true;
-    public static final boolean kRealIndexer = true;
-    public static final boolean kRealManipulator = true;
-    public static final boolean kRealClimb = false;
-    public static final boolean kRealElevator = false;
   }
 
   public static final class FieldConstants {

@@ -1,7 +1,7 @@
 package frc.robot.subsystems.intake;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.IndexerConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.util.SubsystemProfiles;
 import java.util.HashMap;
 import org.littletonrobotics.junction.Logger;
@@ -35,11 +35,11 @@ public class Intake extends SubsystemBase {
   }
 
   public void idlePeriodic() {
-    m_io.setVoltage(IndexerConstants.kIndexerIdleVoltage.get());
+    m_io.setVoltage(IntakeConstants.kIdleVoltage.get());
   }
 
   public void intakingPeriodic() {
-    m_io.setVoltage(IndexerConstants.kIndexerIndexingVoltage.get());
+    m_io.setVoltage(IntakeConstants.kIntakingVoltage.get());
   }
 
   public IntakeState getState() {
