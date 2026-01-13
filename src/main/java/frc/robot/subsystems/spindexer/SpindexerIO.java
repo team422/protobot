@@ -16,11 +16,8 @@ public interface SpindexerIO {
 
   public void updateInputs(SpindexerInputs inputs);
 
-  public void setPIDFF(int slot, double kP, double kI, double kD, double kS);
-
   public void setVoltage(double voltage);
 
   public void setCurrentLimits(double supplyLimit);
 
-  public void setSlot(int slot);
 }

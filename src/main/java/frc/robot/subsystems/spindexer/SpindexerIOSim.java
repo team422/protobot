@@ -1,6 +1,5 @@
 package frc.robot.subsystems.spindexer;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
@@ -8,7 +7,6 @@ import frc.robot.Constants.SpindexerConstants;
 
 public class SpindexerIOSim implements SpindexerIO {
 
-  private PIDController m_controller = new PIDController(0, 0, 0);
   private DCMotorSim m_sim;
   private double m_voltage = 0.0;
 
@@ -48,16 +46,4 @@ public class SpindexerIOSim implements SpindexerIO {
 
   }
 
-  @Override
-  public void setPIDFF(int slot, double kP, double kI, double kD, double kS) {
-    if (slot == 0) {
-      m_controller.setPID(kP, kI, kD);
-    }
-  }
-
-  @Override
-  public void setSlot(int slot) {
-    // Buddy not this in sim either okay
-
-  }
 }
