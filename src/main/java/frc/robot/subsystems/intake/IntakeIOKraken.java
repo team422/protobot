@@ -20,7 +20,7 @@ import frc.robot.Constants.Ports;
 
 public class IntakeIOKraken implements IntakeIO {
   private TalonFX m_motor;
-  
+
   private TalonFXConfiguration m_config;
 
   private VoltageOut m_voltage = new VoltageOut(0).withEnableFOC(true);
@@ -61,7 +61,7 @@ public class IntakeIOKraken implements IntakeIO {
     m_supplyCurrent = m_motor.getSupplyCurrent();
     m_statorCurrent = m_motor.getStatorCurrent();
     m_temperature = m_motor.getDeviceTemp();
-    
+
     StatusSignal.setUpdateFrequencyForAll(
         50,
         m_connected,
@@ -69,20 +69,13 @@ public class IntakeIOKraken implements IntakeIO {
         m_velocity,
         m_supplyCurrent,
         m_statorCurrent,
-        m_temperature
-        );
+        m_temperature);
   }
 
   @Override
   public void updateInputs(IntakeInputs inputs) {
     BaseStatusSignal.refreshAll(
-        m_connected,
-        m_voltageSignal,
-        m_velocity,
-        m_supplyCurrent,
-        m_statorCurrent,
-        m_temperature
-        );
+        m_connected, m_voltageSignal, m_velocity, m_supplyCurrent, m_statorCurrent, m_temperature);
 
     inputs.Connected = m_connected.getValue() != ConnectedMotorValue.Unknown;
     inputs.Voltage = m_voltageSignal.getValueAsDouble();

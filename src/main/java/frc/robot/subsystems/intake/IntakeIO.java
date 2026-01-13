@@ -15,7 +15,6 @@ public interface IntakeIO {
     public boolean Connected;
     public double Velocity;
     public double SupplyCurrent;
-
   }
 
   public void updateInputs(IntakeInputs inputs);
