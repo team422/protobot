@@ -28,7 +28,7 @@ public class RobotState {
     HashMap<RobotAction, Runnable> hash = new HashMap<>();
     hash.put(RobotAction.kAutoDefault, () -> {});
     hash.put(RobotAction.kTeleopDefault, () -> {});
-    hash.put(RobotAction.kIntaking, () -> {} );
+    hash.put(RobotAction.kIntaking, () -> {});
 
     m_profiles = new SubsystemProfiles<>(hash, RobotAction.kTeleopDefault);
   }
