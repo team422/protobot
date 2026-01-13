@@ -1,4 +1,4 @@
-package frc.robot.subsystems.drive.Intake;
+package frc.robot.subsystems.drive.intake;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
