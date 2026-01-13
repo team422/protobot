@@ -6,10 +6,8 @@ import frc.robot.Constants.IndexerConstants;
 
 public class IntakeIOSim implements IntakeIO {
   private DCMotorSim m_Sim;
-  //private DCMotorSim m_topSim;
 
   private double m_Voltage = 0.0;
-  //private double m_topVoltage = 0.0;
 
   public IntakeIOSim() {
     var plant =
@@ -17,7 +15,6 @@ public class IntakeIOSim implements IntakeIO {
             IndexerConstants.kSimGearbox, IndexerConstants.kSimMOI, IndexerConstants.kSimGearing);
 
     m_Sim = new DCMotorSim(plant, IndexerConstants.kSimGearbox);
-    //m_topSim = new DCMotorSim(plant, IndexerConstants.kSimGearbox);
   }
 
   @Override
