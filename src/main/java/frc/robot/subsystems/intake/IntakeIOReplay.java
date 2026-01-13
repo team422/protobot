@@ -10,4 +10,3 @@ public class IntakeIOReplay implements IntakeIO {
   @Override
   public void setCurrentLimits(double supplyLimit) {}
 }
-

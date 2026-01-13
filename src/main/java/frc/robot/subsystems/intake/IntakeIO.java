@@ -12,6 +12,9 @@ public interface IntakeIO {
     public double Voltage;
     public double Temperature;
     public boolean MotorIsConnected;
+    public boolean Connected;
+    public double Velocity;
+    public double SupplyCurrent;
 
   }
 

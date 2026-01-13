@@ -5,49 +5,40 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import frc.robot.Constants.IndexerConstants;
 
 public class IntakeIOSim implements IntakeIO {
-  private DCMotorSim m_Sim;
+  private DCMotorSim m_sim;
 
-  private double m_Voltage = 0.0;
+  private double m_voltage = 0.0;
 
   public IntakeIOSim() {
     var plant =
         LinearSystemId.createDCMotorSystem(
             IndexerConstants.kSimGearbox, IndexerConstants.kSimMOI, IndexerConstants.kSimGearing);
 
-    m_Sim = new DCMotorSim(plant, IndexerConstants.kSimGearbox);
+    m_sim = new DCMotorSim(plant, IndexerConstants.kSimGearbox);
   }
 
   @Override
   public void updateInputs(IntakeInputs inputs) {
-    m_Sim.setInputVoltage(m_Voltage);
-    m_Sim.update(0.02);
+    m_sim.setInputVoltage(m_voltage);
+    m_sim.update(0.02);
 
-    inputs.Position = m_Sim.getAngularPositionRotations();
-    inputs.VelocityRPS = m_Sim.getAngularVelocityRPM() / 60;
-    inputs.Current = m_Sim.getCurrentDrawAmps();
-    inputs.Voltage = m_Voltage;
+    inputs.Position = m_sim.getAngularPositionRotations();
+    inputs.VelocityRPS = m_sim.getAngularVelocityRPM() / 60;
+    inputs.Current = m_sim.getCurrentDrawAmps();
+    inputs.Voltage = m_voltage;
 
-    //m_topSim.setInputVoltage(m_topVoltage);
-    //m_topSim.update(0.02);
-
-    //inputs.topPosition = m_topSim.getAngularPositionRotations();
-    //inputs.topVelocityRPS = m_topSim.getAngularVelocityRPM() / 60;
-    //inputs.topCurrent = m_topSim.getCurrentDrawAmps();
-    //inputs.topVoltage = m_topVoltage;
-
-    // these don't matter in sim
+    // Don't matter for sim
     inputs.StatorCurrent = 0.0;
-    inputs.MotorIsConnected = false;
+    inputs.MotorIsConnected = true;
   }
 
   @Override
   public void setVoltage(double Voltage) {
-    m_Voltage = Voltage;
-    //m_topVoltage = topVoltage;
+    m_voltage = Voltage;
   }
 
   @Override
   public void setCurrentLimits(double supplyLimit) {
-    // Not needed for simulation
+    // Not needed for sim
   }
 }

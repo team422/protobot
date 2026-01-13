@@ -1,4 +1,4 @@
-package frc.robot.subsystems.drive.intake;
+package frc.robot.subsystems.intake;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
@@ -19,29 +19,21 @@ import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.Ports;
 
 public class IntakeIOKraken implements IntakeIO {
-  private TalonFX m_Motor;
-  //private TalonFX m_sideMotor;
+  private TalonFX m_motor;
+  
   private TalonFXConfiguration m_config;
 
-  private VoltageOut m_Voltage = new VoltageOut(0).withEnableFOC(true);
-  //private VoltageOut m_sideVoltage = new VoltageOut(0).withEnableFOC(true);
+  private VoltageOut m_voltage = new VoltageOut(0).withEnableFOC(true);
 
-  private StatusSignal<ConnectedMotorValue> m_Connected;
-  private StatusSignal<ConnectedMotorValue> m_sideConnected;
-  private StatusSignal<Voltage> m_VoltageSignal;
-  private StatusSignal<Voltage> m_sideVoltageSignal;
-  private StatusSignal<AngularVelocity> m_Velocity;
-  private StatusSignal<AngularVelocity> m_sideVelocity;
-  private StatusSignal<Current> m_SupplyCurrent;
-  private StatusSignal<Current> m_sideSupplyCurrent;
-  private StatusSignal<Current> m_StatorCurrent;
-  private StatusSignal<Current> m_sideStatorCurrent;
-  private StatusSignal<Temperature> m_Temperature;
-  private StatusSignal<Temperature> m_sideTemperature;
+  private StatusSignal<ConnectedMotorValue> m_connected;
+  private StatusSignal<Voltage> m_voltageSignal;
+  private StatusSignal<AngularVelocity> m_velocity;
+  private StatusSignal<Current> m_supplyCurrent;
+  private StatusSignal<Current> m_statorCurrent;
+  private StatusSignal<Temperature> m_temperature;
 
   public IntakeIOKraken(int top, int side) {
-    m_Motor = new TalonFX(top, Ports.kDriveCanivoreName);
-    //m_sideMotor = new TalonFX(side, Ports.kMainCanivoreName);
+    m_motor = new TalonFX(top, Ports.kDriveCanivoreName);
 
     var currentLimits =
         new CurrentLimitsConfigs()
@@ -61,82 +53,54 @@ public class IntakeIOKraken implements IntakeIO {
             .withFeedback(feedbackConfig)
             .withMotorOutput(motorOutput);
 
-    //m_sideMotor.getConfigurator().apply(m_config);
-    m_Motor.getConfigurator().apply(m_config);
+    m_motor.getConfigurator().apply(m_config);
 
-    m_Connected = m_Motor.getConnectedMotor();
-    //m_sideConnected = m_sideMotor.getConnectedMotor();
-
-    m_VoltageSignal = m_Motor.getMotorVoltage();
-    //m_sideVoltageSignal = m_sideMotor.getMotorVoltage();
-
-    m_Velocity = m_Motor.getVelocity();
-    //m_sideVelocity = m_sideMotor.getVelocity();
-
-    m_SupplyCurrent = m_Motor.getSupplyCurrent();
-    //m_sideSupplyCurrent = m_sideMotor.getSupplyCurrent();
-
-    m_StatorCurrent = m_Motor.getStatorCurrent();
-    //m_sideStatorCurrent = m_sideMotor.getStatorCurrent();
-
-    m_Temperature = m_Motor.getDeviceTemp();
-    //m_sideTemperature = m_sideMotor.getDeviceTemp();
+    m_connected = m_motor.getConnectedMotor();
+    m_voltageSignal = m_motor.getMotorVoltage();
+    m_velocity = m_motor.getVelocity();
+    m_supplyCurrent = m_motor.getSupplyCurrent();
+    m_statorCurrent = m_motor.getStatorCurrent();
+    m_temperature = m_motor.getDeviceTemp();
+    
     StatusSignal.setUpdateFrequencyForAll(
         50,
-        m_Connected,
-        //m_sideConnected,
-        m_VoltageSignal,
-        //m_sideVoltageSignal,
-        m_Velocity,
-        //m_sideVelocity,
-        m_SupplyCurrent,
-        //m_sideSupplyCurrent,
-        m_StatorCurrent,
-        //m_sideStatorCurrent,
-        m_Temperature
-        //m_sideTemperature
+        m_connected,
+        m_voltageSignal,
+        m_velocity,
+        m_supplyCurrent,
+        m_statorCurrent,
+        m_temperature
         );
   }
 
   @Override
   public void updateInputs(IntakeInputs inputs) {
     BaseStatusSignal.refreshAll(
-        m_Connected,
-        //m_sideConnected,
-        m_VoltageSignal,
-        //m_sideVoltageSignal,
-        m_Velocity,
-        //m_sideVelocity,
-        m_SupplyCurrent,
-        //m_sideSupplyCurrent,
-        m_StatorCurrent,
-        //m_sideStatorCurrent,
-        m_Temperature
-        //m_sideTemperature
+        m_connected,
+        m_voltageSignal,
+        m_velocity,
+        m_supplyCurrent,
+        m_statorCurrent,
+        m_temperature
         );
 
-    inputs.Connected = m_Connected.getValue() != ConnectedMotorValue.Unknown;
-    //inputs.sideConnected = m_sideConnected.getValue() != ConnectedMotorValue.Unknown;
-
-    inputs.Voltage = m_VoltageSignal.getValueAsDouble();
-    //inputs.sideVoltage = m_sideVoltageSignal.getValueAsDouble();
-
-    inputs.Velocity = m_Velocity.getValueAsDouble();
-    //inputs.sideVelocity = m_sideVelocity.getValueAsDouble();
-
-    inputs.SupplyCurrent = m_SupplyCurrent.getValueAsDouble();
-    //inputs.sideSupplyCurrent = m_sideSupplyCurrent.getValueAsDouble();
-
-    inputs.StatorCurrent = m_StatorCurrent.getValueAsDouble();
-    //inputs.sideStatorCurrent = m_sideStatorCurrent.getValueAsDouble();
-
-    inputs.Temperature = m_Temperature.getValueAsDouble();
-    //inputs.bottomTemperature = m_sideTemperature.getValueAsDouble();
+    inputs.Connected = m_connected.getValue() != ConnectedMotorValue.Unknown;
+    inputs.Voltage = m_voltageSignal.getValueAsDouble();
+    inputs.Velocity = m_velocity.getValueAsDouble();
+    inputs.SupplyCurrent = m_supplyCurrent.getValueAsDouble();
+    inputs.StatorCurrent = m_statorCurrent.getValueAsDouble();
+    inputs.Temperature = m_temperature.getValueAsDouble();
   }
 
   @Override
   public void setVoltage(double Voltage) {
-    m_Motor.setControl(m_Voltage);
-    //m_sideMotor.setControl(m_sideVoltage.withOutput(side));
+    m_motor.setControl(m_voltage.withOutput(Voltage));
+  }
+
+  @Override
+  public void setCurrentLimits(double supplyLimit) {
+    m_motor
+        .getConfigurator()
+        .apply(m_config.CurrentLimits.withSupplyCurrentLimit(supplyLimit), 0.0);
   }
 }
