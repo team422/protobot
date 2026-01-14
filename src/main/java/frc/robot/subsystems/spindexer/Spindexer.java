@@ -16,7 +16,6 @@ public class Spindexer {
   public static enum SpindexerState {
     kIdle,
     kSpinning,
-    kScoring,
   }
 
   public Spindexer(SpindexerIO spindexerIO) {
@@ -24,7 +23,6 @@ public class Spindexer {
     Map<SpindexerState, Runnable> periodicHash = new HashMap<>();
     periodicHash.put(SpindexerState.kIdle, this::idlePeriodic);
     periodicHash.put(SpindexerState.kSpinning, this::spinningPeriodic);
-    periodicHash.put(SpindexerState.kScoring, this::scoringPeriodic);
 
     m_profiles = new SubsystemProfiles<>(periodicHash, SpindexerState.kIdle);
   }
@@ -43,10 +41,6 @@ public class Spindexer {
 
   public void spinningPeriodic() {
     m_io.setVoltage(SpindexerConstants.kSpinningVoltage);
-  }
-
-  public void scoringPeriodic() {
-    m_io.setVoltage(SpindexerConstants.kScoringVoltage);
   }
 
   public void updateState(SpindexerState state) {
