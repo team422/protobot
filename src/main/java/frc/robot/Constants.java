@@ -650,6 +650,10 @@ public final class Constants {
     public static final double kIndexerDefaultSupplyLimit = 30.0;
     public static final double kIndexerDefaultStatorLimit = 120.0;
 
+    // Spindexer
+    public static final double kSpindexerDefaultSupplyLimit = 30.0;
+    public static final double kSpindexerDefaultStatorLimit = 120.0;
+
     // Manipulator
     public static final double kManipulatorWristDefaultSupplyLimit = 80.0;
     public static final double kManipulatorWristDefaultStatorLimit = 120.0;
@@ -664,6 +668,10 @@ public final class Constants {
     // Climb
     public static final double kClimbDefaultSupplyLimit = 80.0;
     public static final double kClimbDefaultStatorLimit = 120.0;
+  }
+
+  public static final class SpindexerConstants {
+    public static final double kGearRatio = 30.0 / 8.0;
   }
 
   public static final class IndexerConstants {
