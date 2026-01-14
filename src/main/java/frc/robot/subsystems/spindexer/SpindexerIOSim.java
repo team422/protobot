@@ -45,5 +45,4 @@ public class SpindexerIOSim implements SpindexerIO {
     // Listen here boy sim don't need this bro - Signed: Me
 
   }
-
 }

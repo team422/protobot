@@ -19,5 +19,4 @@ public interface SpindexerIO {
   public void setVoltage(double voltage);
 
   public void setCurrentLimits(double supplyLimit);
-
 }
