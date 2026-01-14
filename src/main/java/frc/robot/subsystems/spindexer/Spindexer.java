@@ -7,7 +7,7 @@ import java.util.Map;
 import org.littletonrobotics.junction.Logger;
 
 public class Spindexer {
-  private SpindexerIO m_spindexerIO;
+  private SpindexerIO m_io;
   public final SpindexerInputsAutoLogged m_inputs = new SpindexerInputsAutoLogged();
 
   private SubsystemProfiles<SpindexerState> m_profiles;
@@ -19,7 +19,7 @@ public class Spindexer {
   }
 
   public Spindexer(SpindexerIO spindexerIO) {
-    m_spindexerIO = spindexerIO;
+    m_io = spindexerIO;
     Map<SpindexerState, Runnable> periodicHash = new HashMap<>();
     periodicHash.put(SpindexerState.kIdle, this::idlePeriodic);
     periodicHash.put(SpindexerState.kSpinning, this::spinningPeriodic);
@@ -29,21 +29,23 @@ public class Spindexer {
   }
 
   public void periodic() {
-    m_spindexerIO.updateInputs(m_inputs);
+    m_io.updateInputs(m_inputs);
+    m_profiles.getPeriodicFunctionTimed().run();
+
     Logger.processInputs("Spindexer", m_inputs);
-    Logger.recordOutput("Spindexer Velocity", m_inputs.velocityRPS);
+    Logger.recordOutput("Spindexer State", m_profiles.getCurrentProfile());
   }
 
   public void idlePeriodic() {
-    m_spindexerIO.setVoltage(SpindexerConstants.kIdleVoltage);
+    m_io.setVoltage(SpindexerConstants.kIdleVoltage);
   }
 
   public void spinningPeriodic() {
-    m_spindexerIO.setVoltage(SpindexerConstants.kSpinningVoltage);
+    m_io.setVoltage(SpindexerConstants.kSpinningVoltage);
   }
 
   public void scoringPeriodic() {
-    m_spindexerIO.setVoltage(SpindexerConstants.kScoringVoltage);
+    m_io.setVoltage(SpindexerConstants.kScoringVoltage);
   }
 
   public void updateState(SpindexerState state) {
