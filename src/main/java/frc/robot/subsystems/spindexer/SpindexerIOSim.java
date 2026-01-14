@@ -29,10 +29,7 @@ public class SpindexerIOSim implements SpindexerIO {
     inputs.accelerationRPSSq = Units.radiansToRotations(m_sim.getAngularAccelerationRadPerSecSq());
     inputs.current = m_sim.getCurrentDrawAmps();
     inputs.voltage = m_voltage;
-
-    inputs.statorCurrent = 0.0;
-    inputs.temperature = 0.0;
-    inputs.motorIsConnected = false;
+    inputs.motorIsConnected = true;
   }
 
   @Override

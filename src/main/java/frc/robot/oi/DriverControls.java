@@ -10,4 +10,6 @@ public interface DriverControls {
   public double getTurn();
 
   public Trigger resetFieldCentric();
+
+  public Trigger spin();
 }

@@ -198,15 +198,16 @@ public final class Constants {
   }
 
   public static final class SpindexerConstants {
-    // sim
+    public static final LoggedTunableNumber kIdleVoltage =
+        new LoggedTunableNumber("Spindexer/idleVoltage", 0.0);
+    public static final LoggedTunableNumber kSpinningVoltage =
+        new LoggedTunableNumber("Spindexer/spinningVoltage", 5.0);
     public static final double kGearRatio = 30.0 / 8.0;
+    // sim
     public static final DCMotor kSimGearbox = DCMotor.getKrakenX60(1);
     public static final double kSimMOI = .005;
     public static final double kSimGearRatio = (30.0 / 12.0);
     public static final double kSimGearing = kSimGearRatio;
-
-    public static final double kIdleVoltage = 0.0;
-    public static final double kSpinningVoltage = 4.0;
   }
 
   public static final class AprilTagVisionConstants {
@@ -369,6 +370,7 @@ public final class Constants {
     public static final String kDriveCanivoreName = "Drivetrain";
 
     public static final int kIntake = 12;
+    public static final int kSpindexer = 13;
 
     public static final String kMainCanivoreName = "Main";
   }
