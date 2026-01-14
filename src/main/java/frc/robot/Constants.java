@@ -205,8 +205,7 @@ public final class Constants {
     public static final double kSimGearing = kSimGearRatio;
 
     public static final double kIdleVoltage = 0.0;
-    public static final double kSpinningVoltage = 10.0;
-    public static final double kScoringVoltage = 10.0;
+    public static final double kSpinningVoltage = 4.0;
   }
 
   public static final class AprilTagVisionConstants {
