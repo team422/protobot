@@ -5,6 +5,7 @@ import static edu.wpi.first.units.Units.Celsius;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.Volts;
 
+import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
@@ -18,8 +19,11 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
+import frc.robot.Constants;
 import frc.robot.Constants.CurrentLimitConstants;
 import frc.robot.Constants.SpindexerConstants;
+import frc.robot.util.CtreBaseRefreshManager;
+import java.util.List;
 
 public class SpindexerIOKraken implements SpindexerIO {
 
@@ -57,16 +61,50 @@ public class SpindexerIOKraken implements SpindexerIO {
             .withFeedback(feedbackConfig)
             .withMotorOutput(motorOutput);
 
+    m_motor.getConfigurator().apply(m_config);
+
     m_connectedMotor = m_motor.getConnectedMotor();
     m_motorVelocity = m_motor.getVelocity();
     m_motorCurrent = m_motor.getSupplyCurrent();
     m_motorStatorCurrent = m_motor.getStatorCurrent();
     m_motorVoltage = m_motor.getMotorVoltage();
     m_motorTemperature = m_motor.getDeviceTemp();
+
+    BaseStatusSignal.setUpdateFrequencyForAll(
+        75.0,
+        m_connectedMotor,
+        m_motorVelocity,
+        m_motorCurrent,
+        m_motorStatorCurrent,
+        m_motorVoltage,
+        m_motorTemperature);
+
+    if (Constants.kUseBaseRefreshManager) {
+      CtreBaseRefreshManager.addSignals(
+          List.of(
+              m_connectedMotor,
+              m_motorVelocity,
+              m_motorCurrent,
+              m_motorStatorCurrent,
+              m_motorVoltage,
+              m_motorTemperature));
+    }
   }
 
   @Override
   public void updateInputs(SpindexerInputs inputs) {
+    if (!Constants.kUseBaseRefreshManager) {
+      BaseStatusSignal.refreshAll(
+              null,
+              m_connectedMotor,
+              m_motorVelocity,
+              m_motorCurrent,
+              m_motorStatorCurrent,
+              m_motorVoltage,
+              m_motorTemperature)
+          .isOK();
+    }
+
     inputs.motorIsConnected = m_connectedMotor.getValue() != ConnectedMotorValue.Unknown;
 
     inputs.velocityRPS = m_motorVelocity.getValue().in(RotationsPerSecond);
