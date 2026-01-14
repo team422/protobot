@@ -1,6 +1,7 @@
 package frc.robot.subsystems.spindexer;
 
 import frc.robot.Constants.SpindexerConstants;
+import frc.robot.subsystems.spindexer.SpindexerIO.SpindexerInputs;
 import frc.robot.util.SubsystemProfiles;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +9,7 @@ import org.littletonrobotics.junction.Logger;
 
 public class Spindexer {
   private SpindexerIO m_io;
-  public final SpindexerInputsAutoLogged m_inputs = new SpindexerInputsAutoLogged();
+  public final SpindexerInputs m_inputs = new SpindexerInputs();
 
   private SubsystemProfiles<SpindexerState> m_profiles;
 
@@ -29,10 +30,10 @@ public class Spindexer {
   }
 
   public void periodic() {
-    m_io.updateInputs(m_inputs);
+    // m_io.updateInputs(m_inputs);
     m_profiles.getPeriodicFunctionTimed().run();
 
-    Logger.processInputs("Spindexer", m_inputs);
+    // Logger.processInputs("Spindexer", m_inputs);
     Logger.recordOutput("Spindexer State", m_profiles.getCurrentProfile());
   }
 

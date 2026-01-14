@@ -199,6 +199,7 @@ public final class Constants {
 
   public static final class SpindexerConstants {
     // sim
+    public static final double kGearRatio = 30.0 / 8.0;
     public static final DCMotor kSimGearbox = DCMotor.getKrakenX60(1);
     public static final double kSimMOI = .005;
     public static final double kSimGearRatio = (30.0 / 12.0);
@@ -304,6 +305,10 @@ public final class Constants {
     // Indexer
     public static final double kIndexerDefaultSupplyLimit = 30.0;
     public static final double kIndexerDefaultStatorLimit = 120.0;
+
+    // Spindexer
+    public static final double kSpindexerDefaultSupplyLimit = 30.0;
+    public static final double kSpindexerDefaultStatorLimit = 120.0;
 
     // Manipulator
     public static final double kManipulatorWristDefaultSupplyLimit = 80.0;
