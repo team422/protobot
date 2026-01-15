@@ -33,7 +33,7 @@ public class RobotContainer {
     configureSubsystems();
     configureCommands();
     configureControllers();
-    configureBindings();
+    configureButtonBindings();
   }
 
   public void configureSubsystems() {
@@ -66,7 +66,7 @@ public class RobotContainer {
     m_controller = new DriverControlsPS5(0);
   }
 
-  public void configureBindings() {
+  public void configureButtonBindings() {
     m_drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             m_drive,
