@@ -38,7 +38,7 @@ public final class Constants {
   public static final Mode kSimMode = Mode.SIM;
   public static final Mode kCurrentMode = RobotBase.isReal() ? kRealMode : kSimMode;
 
-  public static final boolean kUsePhoenixDiagnosticServer = false;
+  public static final boolean kUsePhoenixDiagnosticServer = true;
 
   // set to false to disable the base refresh manager
   public static final boolean kUseBaseRefreshManager = false;
