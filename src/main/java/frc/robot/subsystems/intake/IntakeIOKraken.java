@@ -1,6 +1,5 @@
 package frc.robot.subsystems.intake;
 
-import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
@@ -74,7 +73,7 @@ public class IntakeIOKraken implements IntakeIO {
 
   @Override
   public void updateInputs(IntakeInputs inputs) {
-    BaseStatusSignal.refreshAll(
+    StatusSignal.refreshAll(
         m_connected, m_voltageSignal, m_velocity, m_supplyCurrent, m_statorCurrent, m_temperature);
 
     inputs.connected = m_connected.getValue() != ConnectedMotorValue.Unknown;

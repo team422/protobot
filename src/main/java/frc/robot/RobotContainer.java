@@ -86,8 +86,8 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(
                 (() -> {
-                  if(RobotState.getInstance().getCurrAction() != RobotAction.kIntaking) {
-                  RobotState.getInstance().updateRobotAction(RobotAction.kIntaking);
+                  if (RobotState.getInstance().getCurrAction() != RobotAction.kIntaking) {
+                    RobotState.getInstance().updateRobotAction(RobotAction.kIntaking);
                   } else {
                     RobotState.getInstance().updateRobotAction(RobotAction.kTeleopDefault);
                   }
