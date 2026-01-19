@@ -14,6 +14,7 @@ public class RobotState {
   }
 
   private Drive m_drive;
+
   private SubsystemProfiles<RobotAction> m_profiles;
   private static RobotState m_instance;
 
