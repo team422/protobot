@@ -186,7 +186,7 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final LoggedTunableNumber kIntakingVoltage =
-        new LoggedTunableNumber("Intake/intakingVoltage", 7.0);
+        new LoggedTunableNumber("Intake/intakingVoltage", 8.5);
     public static final LoggedTunableNumber kIdleVoltage =
         new LoggedTunableNumber("Intake/idleVoltage", 0.0);
 
