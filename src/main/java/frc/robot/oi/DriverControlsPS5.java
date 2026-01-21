@@ -22,7 +22,7 @@ public class DriverControlsPS5 implements DriverControls {
 
   @Override
   public double getTurn() {
-    return -m_controller.getRightX();
+    return m_controller.getRightX();
   }
 
   @Override
