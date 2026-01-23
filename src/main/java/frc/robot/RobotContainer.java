@@ -1,7 +1,6 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -16,7 +15,6 @@ import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIOKraken;
 import frc.robot.subsystems.intake.IntakeIOSim;
-import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 public class RobotContainer {
@@ -93,15 +91,6 @@ public class RobotContainer {
                     RobotState.getInstance().updateRobotAction(RobotAction.kTeleopDefault);
                   }
                 })));
-
-    m_controller
-        .testing()
-        .onTrue(
-            Commands.runOnce(
-                () -> {
-                  m_drive.setDesiredChassisSpeeds(new ChassisSpeeds(0, 0, 1));
-                  Logger.recordOutput("please", true);
-                }));
   }
 
   public Command getAutonomousCommand() {

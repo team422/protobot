@@ -34,9 +34,4 @@ public class DriverControlsXbox implements DriverControls {
   public Trigger intake() {
     return m_controller.rightBumper();
   }
-
-  @Override
-  public Trigger testing() {
-    return m_controller.a();
-  }
 }

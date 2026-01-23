@@ -12,6 +12,4 @@ public interface DriverControls {
   public Trigger resetFieldCentric();
 
   public Trigger intake();
-
-  public Trigger testing();
 }
