@@ -198,6 +198,10 @@ public final class Constants {
     public static final double kSimMOI = .005;
   }
 
+  public static final class ShoryaConstants {
+    
+  }
+
   public static final class AprilTagVisionConstants {
     public static final LoggedTunableNumber kUseVision = new LoggedTunableNumber("Use Vision", 1);
 
@@ -286,6 +290,10 @@ public final class Constants {
     // Intake
     public static final double kIntakeDefaultSupplyLimit = 30.0;
     public static final double kIntakeDefaultStatorLimit = 120.0;
+
+    //shoryaInstruction
+    public static final double kshoryaInstructionDefaultStatorLimit = 67.0;
+    public static final double kshoryaInstructionDefaultSupplyLimit = 67.0;
   }
 
   public static final class Ports {
