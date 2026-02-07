@@ -199,7 +199,10 @@ public final class Constants {
   }
 
   public static final class ShoryaConstants {
-    
+    public static final double kGearRatio = 67.0;
+    public static final Rotation2d kshoryaInstructionMinAngle = new Rotation2d();
+    public static final Rotation2d kshoryaInstructionMaxAngle = new Rotation2d();
+    public static final double kshoryaInstructionTolerance = 67.0;
   }
 
   public static final class AprilTagVisionConstants {
@@ -291,7 +294,7 @@ public final class Constants {
     public static final double kIntakeDefaultSupplyLimit = 30.0;
     public static final double kIntakeDefaultStatorLimit = 120.0;
 
-    //shoryaInstruction
+    // shoryaInstruction
     public static final double kshoryaInstructionDefaultStatorLimit = 67.0;
     public static final double kshoryaInstructionDefaultSupplyLimit = 67.0;
   }
