@@ -22,11 +22,16 @@ public class DriverControlsPS5 implements DriverControls {
 
   @Override
   public double getTurn() {
-    return -m_controller.getRightX();
+    return m_controller.getRightX();
   }
 
   @Override
   public Trigger resetFieldCentric() {
     return m_controller.touchpad();
+  }
+
+  @Override
+  public Trigger intake() {
+    return m_controller.R1();
   }
 }

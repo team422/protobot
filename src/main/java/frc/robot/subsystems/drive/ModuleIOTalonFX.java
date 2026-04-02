@@ -80,7 +80,7 @@ public class ModuleIOTalonFX implements ModuleIO {
   private final StatusSignal<Voltage>
       m_cancoderSupplyVoltage; // for checking if cancoder is connected
 
-  private final boolean m_isTurnMotorInverted = true;
+  private final boolean m_isTurnMotorInverted = false;
   private final boolean m_isCancoderInverted = false;
   private final Rotation2d m_absoluteEncoderOffset;
 
